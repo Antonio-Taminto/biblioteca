@@ -1,0 +1,12 @@
+spring:
+    output.ansi.enabled: ALWAYS
+    application:
+        name: biblioteca
+    jpa:
+        show_sql: true
+        hibernate:
+            ddl_auto: update
+    datasource:
+        url: jdbc:mysql://localhost:3306/biblio
+        username: root
+        password: root
