@@ -3,6 +3,7 @@ package com.gestionale.biblioteca.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Utente {
 
     @OneToMany(mappedBy = "utente",cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Libro> libriInPrestitoList;
+    private List<Libro> libriInPrestitoList= new ArrayList<Libro>();
 
     public Utente(Long id, List<Libro> libriInPrestitoList, String nome) {
         this.id = id;

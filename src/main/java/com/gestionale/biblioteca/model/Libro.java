@@ -1,7 +1,6 @@
 package com.gestionale.biblioteca.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,7 +19,7 @@ public class Libro {
 
     private boolean disponibile;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private Utente utente;
