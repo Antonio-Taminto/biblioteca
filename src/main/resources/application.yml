@@ -1,4 +1,4 @@
-spring:
+spring: 
     output.ansi.enabled: ALWAYS
     application:
         name: biblioteca
