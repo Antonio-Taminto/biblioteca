@@ -1,0 +1,7 @@
+spring:
+  config.activate.n-profile: test
+  output.ansi.enabled: ALWAYS
+  datasource:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    show_sql: true

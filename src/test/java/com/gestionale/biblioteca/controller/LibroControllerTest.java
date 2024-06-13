@@ -1,6 +1,8 @@
 package com.gestionale.biblioteca.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -15,28 +17,27 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gestionale.biblioteca.model.Libro;
 import com.gestionale.biblioteca.model.Utente;
-import com.gestionale.biblioteca.repository.UtenteRepository;
+
 import com.gestionale.biblioteca.service.UtenteService;
 
 @SpringBootTest
-@ActiveProfiles(value = "test")
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LibroControllerTest {
-	@Autowired
+	@InjectMocks
 	private LibroController libroController;
 	@Autowired
 	private UtenteService utenteService;
@@ -48,7 +49,6 @@ public class LibroControllerTest {
 	@Test
 	@Order(1)
 	void contextLoads() throws Exception {
-		// assertThat(libroController).isNotNull();
 		assertThat(libroController).isNotNull();
 	}
 
@@ -72,7 +72,7 @@ public class LibroControllerTest {
 
 		List libroListFromResult = objectMapper.readValue(result.getResponse().getContentAsString(), List.class);
 
-		assertThat(!libroListFromResult.isEmpty());
+		assertNotNull(libroListFromResult);
 	}
 
 	@Test
@@ -81,9 +81,9 @@ public class LibroControllerTest {
 		Long id = 1L;
 		MvcResult result = this.mockMvc.perform(get("/libro/{id}", id)).andExpect(status().isOk()).andReturn();
 		Libro libroFromId = objectMapper.readValue(result.getResponse().getContentAsString(), Libro.class);
-		assertThat(libroFromId.getId().equals(id));
+		assertEquals(libroFromId.getId(),id);
 	}
-	
+
 	@Test
 	@Order(5)
 	void getLibroFromIdNotFoundTest() throws Exception {
@@ -115,7 +115,7 @@ public class LibroControllerTest {
 		utente.setNome("Giacomo");
 		utenteService.addUtente(utente);
 		String utenteJson = objectMapper.writeValueAsString(utente);
-		
+
 		this.mockMvc
 				.perform(patch("/libro/lend/{id}", idLibro).contentType(MediaType.APPLICATION_JSON).content(utenteJson))
 				.andExpect(status().isOk());
