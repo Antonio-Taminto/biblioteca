@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -21,6 +22,16 @@ public class CustomExceptionHandler {
     @ExceptionHandler(value = {NotAvailableException.class})
     public ResponseEntity<CustomExceptionResponse> handleEntityNotAvailableException(NotAvailableException e) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomExceptionResponse exceptionResponse = new CustomExceptionResponse();
+        exceptionResponse.setMessage(e.getMessage());
+        exceptionResponse.setHttpStatus(status);
+        exceptionResponse.setDateTime(LocalDateTime.now());
+        return new ResponseEntity<>(exceptionResponse, status);
+    }
+    
+    @ExceptionHandler(value = {IOException.class})
+    public ResponseEntity<CustomExceptionResponse> handleIOException(IOException e) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
         CustomExceptionResponse exceptionResponse = new CustomExceptionResponse();
         exceptionResponse.setMessage(e.getMessage());
         exceptionResponse.setHttpStatus(status);

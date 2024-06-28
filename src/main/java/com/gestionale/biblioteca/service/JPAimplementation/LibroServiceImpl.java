@@ -1,21 +1,19 @@
 package com.gestionale.biblioteca.service.JPAimplementation;
 
-import com.gestionale.biblioteca.exception.EntityNotFoundException;
-import com.gestionale.biblioteca.exception.NotAvailableException;
-import com.gestionale.biblioteca.model.Libro;
-import com.gestionale.biblioteca.model.Utente;
-import com.gestionale.biblioteca.repository.LibroRepository;
-import com.gestionale.biblioteca.service.LibroService;
-
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
-import java.util.Optional;
+import com.gestionale.biblioteca.exception.EntityNotFoundException;
+import com.gestionale.biblioteca.exception.NotAvailableException;
+import com.gestionale.biblioteca.model.Libro;
+import com.gestionale.biblioteca.model.Utente;
+import com.gestionale.biblioteca.repository.LibroRepository;
+import com.gestionale.biblioteca.service.LibroService;
 
 @Service
 public class LibroServiceImpl implements LibroService {
