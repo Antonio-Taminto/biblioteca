@@ -9,13 +9,12 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
-import org.springframework.batch.item.file.MultiResourceItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -51,10 +50,8 @@ public class BatchConfig {
 		return itemReader;
 	}
 
-	public MultiResourceItemWriter<HSSFWorkbook> itemWriter(String directoryPosition) {
-		MultiResourceItemWriter<HSSFWorkbook> itemWriter = new MultiResourceItemWriter<HSSFWorkbook>();
-		itemWriter.setDelegate();
-		itemWriter.setResource(new FileSystemResource(directoryPosition + "/successReport"));
+	public ItemWriter<HSSFWorkbook> itemWriter(String directoryPosition) {
+		ItemWriter<HSSFWorkbook> itemWriter = new UtenteWriter(directoryPosition);
 		return itemWriter;
 	}
 
