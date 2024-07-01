@@ -16,7 +16,7 @@ public class Utente {
     @Column(nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "utente",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utente",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Libro> libriInPrestitoList= new ArrayList<Libro>();
 

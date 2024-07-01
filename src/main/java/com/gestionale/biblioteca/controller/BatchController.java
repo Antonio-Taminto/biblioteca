@@ -10,6 +10,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class BatchController {
 	@Autowired
 	private JobLauncher jobLauncher;
 	@Autowired
-	//@Qualifier("excel-job")
+	@Qualifier("excel-job")
 	private Job job;
 
 	@PostMapping("/batch")
