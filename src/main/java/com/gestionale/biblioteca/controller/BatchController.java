@@ -11,13 +11,11 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@ComponentScan("com.gestionale.biblioteca.batch")
 public class BatchController {
 	@Autowired
 	private JobLauncher jobLauncher;
@@ -27,7 +25,8 @@ public class BatchController {
 
 	@PostMapping("/batch")
 	public ResponseEntity<String> startBatch() {
-		JobParameters jobParameters = new JobParametersBuilder().addLong("startAt", System.currentTimeMillis())
+		JobParameters jobParameters = new JobParametersBuilder()
+				.addLong("startAt", System.currentTimeMillis())
 				.toJobParameters();
 
 		JobExecution run = null;

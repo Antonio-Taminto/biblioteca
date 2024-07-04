@@ -19,3 +19,5 @@ spring:
       url: jdbc:mysql://localhost:3306/biblio
       username: root
       password: root
+directory: C:\\Users\\User\\Desktop\\datiLib
+

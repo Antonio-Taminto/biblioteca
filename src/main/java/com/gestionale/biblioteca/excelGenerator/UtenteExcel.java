@@ -44,7 +44,7 @@ public class UtenteExcel {
 		cellHeader.setCellValue("autore");
 		cellHeader = rowHeader.createCell(3);
 		cellHeader.setCellValue("Anno Pubblicazione");
-		int rowNumber = 1;
+		int rowNumber = sheet.getPhysicalNumberOfRows();
 		int cellPosition = 0;
 		for (Utente utente : utenteList) {
 			for (Libro libro : utente.getLibriInPrestitoList()) {
