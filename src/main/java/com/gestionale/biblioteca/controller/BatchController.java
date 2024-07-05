@@ -1,5 +1,7 @@
 package com.gestionale.biblioteca.controller;
 
+import com.gestionale.biblioteca.batch.BatchLauncher;
+import com.gestionale.biblioteca.service.BatchService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -12,36 +14,19 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BatchController {
+
 	@Autowired
-	private JobLauncher jobLauncher;
-	@Autowired
-	@Qualifier("excel-job")
-	private Job job;
+	private BatchService batchService;
 
 	@PostMapping("/batch")
-	public ResponseEntity<String> startBatch() {
-		JobParameters jobParameters = new JobParametersBuilder()
-				.addLong("startAt", System.currentTimeMillis())
-				.toJobParameters();
-
-		JobExecution run = null;
-		try {
-			run = jobLauncher.run(job, jobParameters);
-		} catch (JobExecutionAlreadyRunningException e) {
-			throw new RuntimeException(e);
-		} catch (JobRestartException e) {
-			throw new RuntimeException(e);
-		} catch (JobInstanceAlreadyCompleteException e) {
-			throw new RuntimeException(e);
-		} catch (JobParametersInvalidException e) {
-			throw new RuntimeException(e);
-		}
-		return ResponseEntity.ok(run.getStatus().toString());
-
+	public ResponseEntity<Void> startBatch() throws Exception {
+		batchService.startBatch();
+		return ResponseEntity.ok().build();
 	}
 }

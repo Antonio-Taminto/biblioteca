@@ -2,7 +2,9 @@ package com.gestionale.biblioteca.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,12 @@ public class Utente {
     @Column(nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "utente",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @CreationTimestamp
+    private LocalDate creationDate;
+
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<Libro> libriInPrestitoList= new ArrayList<Libro>();
+    private List<Libro> libriInPrestitoList = new ArrayList<Libro>();
 
     public Utente(Long id, List<Libro> libriInPrestitoList, String nome) {
         this.id = id;

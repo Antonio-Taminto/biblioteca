@@ -15,7 +15,7 @@ public class UtenteProcessor implements ItemProcessor<Utente, Utente> {
 
 	@Override
 	public Utente process(Utente item) throws Exception {
-		log.info("processando utente con id" + item.getId());
+		log.info("processando utente con id: " + item.getId());
 		return item;
 	}
 }

@@ -23,9 +23,11 @@ public class UtenteWriter implements ItemWriter<Utente> {
 	private String directoryPosition;
 
 	private HSSFWorkbook workbook = new HSSFWorkbook();
+	private static int numberOfSameFile = 1;
 
 	public UtenteWriter(String directoryPosition) {
 		this.directoryPosition = directoryPosition;
+		log.info("starting writer");
 	}
 
 	public String getDirectoryPosition() {
@@ -44,6 +46,14 @@ public class UtenteWriter implements ItemWriter<Utente> {
 			throw new IOException("directory doesn't not exist");
 		}
 		File destinationFile = new File(directoryPosition + File.separator + name);
+		if(destinationFile.exists()){
+			name = numberOfSameFile + name;
+			destinationFile = new File(directoryPosition + File.separator + name);
+		}
+		if(destinationFile.exists()){
+			throw new IOException("File già esistente");
+		}
+
 		for (Utente utente : chunk) {
 			HSSFSheet sheet = this.workbook.createSheet(utente.getNome());
 			for (Libro libro : utente.getLibriInPrestitoList()) {

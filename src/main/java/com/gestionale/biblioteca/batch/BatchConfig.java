@@ -23,6 +23,9 @@ public class BatchConfig {
 
     @Value("${directory}")
     private String directoryPosition;
+    @Autowired
+    private UtenteReaderList utenteReaderList;
+
 
 
     @Bean
@@ -34,7 +37,7 @@ public class BatchConfig {
     }
 
     private ItemReader<Utente> itemReader() {
-        return new UtenteReaderList(utenteRepository.findAll());
+        return utenteReaderList;
     }
 
     private UtenteProcessor processor() {
@@ -42,7 +45,8 @@ public class BatchConfig {
     }
 
     public ItemWriter<Utente> itemWriter(String directoryPosition) {
-        return new UtenteWriter(directoryPosition);
+        ItemWriter<Utente> itemWriter = new UtenteWriter(directoryPosition);
+        return itemWriter;
     }
 
     @Bean(name = "excel-job")
